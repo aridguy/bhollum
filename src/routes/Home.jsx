@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "../App.css";
 import Navbar from "../components/Navbar";
 import { TypeAnimation } from "react-type-animation";
+import Footer from "../components/Footer";
 
 const Home = () => {
   return (
@@ -238,6 +239,7 @@ const Home = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };

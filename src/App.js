@@ -10,14 +10,13 @@ import Faq from './routes/Faq';
 
 function App() {
   return (
-    
+
     <Router>
-     
       <Routes>
-          <Route index element={<Home />} />
-          <Route path="shop" element={<Shop />} />
-          <Route path="contact" element={<Contact />} />
-          <Route path="faq" element={<Faq />} />
+        <Route index element={<Home />} />
+        <Route path="shop" element={<Shop />} />
+        <Route path="contact" element={<Contact />} />
+        <Route path="faq" element={<Faq />} />
       </Routes>
     </Router>
   );
