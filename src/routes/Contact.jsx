@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import emailjs from "@emailjs/browser";
+import Swal from "sweetalert2";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 
 const Contact = () => {
+  const form = useRef();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -11,6 +14,7 @@ const Contact = () => {
     subject: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -21,22 +25,62 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert(
-      "Thank you for reaching out! We will get back to you within 24 hours.",
-    );
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      subject: "",
-      message: "",
-    });
+    setIsSubmitting(true);
+
+    const serviceId = "service_glwnsbm";
+    const templateId = "template_npwss5h";
+    const publicKey = "9K9sedphGA9hpE4_L";
+
+    const templateParams = {
+      from_name: formData.name,
+      from_email: formData.email,
+      phone: formData.phone || "Not provided",
+      subject: formData.subject,
+      message: formData.message,
+      submission_date: new Date().toLocaleString("en-NG", {
+        dateStyle: "full",
+        timeStyle: "short",
+      }),
+    };
+
+    emailjs
+      .send(serviceId, templateId, templateParams, publicKey)
+      .then(
+        (response) => {
+          Swal.fire({
+            title: "Message Sent!",
+            text: "Thank you for reaching out! We will get back to you within 24 hours.",
+            icon: "success",
+            confirmButtonColor: "#198754",
+          });
+
+          setFormData({
+            name: "",
+            email: "",
+            phone: "",
+            subject: "",
+            message: "",
+          });
+        },
+        (error) => {
+          Swal.fire({
+            title: "Oops!",
+            text: "Something went wrong. Please try again or contact us directly via phone or email.",
+            icon: "error",
+            confirmButtonColor: "#198754",
+          });
+        },
+      )
+      .finally(() => {
+        setIsSubmitting(false);
+      });
   };
 
   return (
     <div className="contact-page">
-      {/* Hero Section */}
       <Navbar />
+
+      {/* Hero Section */}
       <section className="bg-success bg-opacity-10 py-5">
         <div className="container">
           <div className="row">
@@ -69,10 +113,10 @@ const Contact = () => {
                       8:00 AM - 6:00 PM
                     </p>
                     <a
-                      href="tel:+234XXXXXXXXXX"
+                      href="tel:+2348166694371"
                       className="text-success fw-bold text-decoration-none fs-5"
                     >
-                      +234 816 6694 371
+                      +234 816 669 4371
                     </a>
                   </div>
                 </div>
@@ -86,14 +130,11 @@ const Contact = () => {
                       We'll respond within 24 hours
                     </p>
                     <a
-                      href="mailto:hello@bhollum.com"
+                      href="mailto:bhollumenterprise@gmail.com"
                       className="text-success fw-bold text-decoration-none"
                     >
                       bhollumenterprise@gmail.com
                     </a>
-                    <p className="card-text text-secondary mt-2">
-                      bhollumenterprise@gmail.com
-                    </p>
                   </div>
                 </div>
 
@@ -123,7 +164,7 @@ const Contact = () => {
                     Fill out the form below and we'll get back to you shortly.
                   </p>
 
-                  <form onSubmit={handleSubmit}>
+                  <form ref={form} onSubmit={handleSubmit}>
                     <div className="row g-3">
                       <div className="col-md-6">
                         <label
@@ -141,6 +182,7 @@ const Contact = () => {
                           onChange={handleChange}
                           placeholder="John Doe"
                           required
+                          disabled={isSubmitting}
                         />
                       </div>
 
@@ -160,6 +202,7 @@ const Contact = () => {
                           onChange={handleChange}
                           placeholder="john@example.com"
                           required
+                          disabled={isSubmitting}
                         />
                       </div>
 
@@ -178,6 +221,7 @@ const Contact = () => {
                           value={formData.phone}
                           onChange={handleChange}
                           placeholder="+234 XXX XXX XXXX"
+                          disabled={isSubmitting}
                         />
                       </div>
 
@@ -195,13 +239,20 @@ const Contact = () => {
                           value={formData.subject}
                           onChange={handleChange}
                           required
+                          disabled={isSubmitting}
                         >
                           <option value="">Select a subject</option>
-                          <option value="order">Order Inquiry</option>
-                          <option value="product">Product Question</option>
-                          <option value="souvenir">Souvenir Package</option>
-                          <option value="delivery">Delivery Information</option>
-                          <option value="other">Other</option>
+                          <option value="Order Inquiry">Order Inquiry</option>
+                          <option value="Product Question">
+                            Product Question
+                          </option>
+                          <option value="Souvenir Package">
+                            Souvenir Package
+                          </option>
+                          <option value="Delivery Information">
+                            Delivery Information
+                          </option>
+                          <option value="Other">Other</option>
                         </select>
                       </div>
 
@@ -221,6 +272,7 @@ const Contact = () => {
                           onChange={handleChange}
                           placeholder="Tell us how we can help you..."
                           required
+                          disabled={isSubmitting}
                         ></textarea>
                       </div>
 
@@ -228,8 +280,20 @@ const Contact = () => {
                         <button
                           type="submit"
                           className="btn btn-success btn-lg px-5"
+                          disabled={isSubmitting}
                         >
-                          Send Message →
+                          {isSubmitting ? (
+                            <>
+                              <span
+                                className="spinner-border spinner-border-sm me-2"
+                                role="status"
+                                aria-hidden="true"
+                              ></span>
+                              Sending...
+                            </>
+                          ) : (
+                            "Send Message →"
+                          )}
                         </button>
                       </div>
                     </div>
@@ -258,6 +322,7 @@ const Contact = () => {
           </div>
         </div>
       </section>
+
       <Footer />
     </div>
   );
