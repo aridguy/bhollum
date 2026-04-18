@@ -519,3 +519,91 @@
 
 
 /* footer */
+/* How It Works Section */
+.how-it-works {
+  padding: 80px 0;
+  background: #fafafa;
+}
+
+.steps-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.step-card {
+  background: white;
+  padding: 40px 30px;
+  border-radius: 20px;
+  text-align: center;
+  flex: 1;
+  min-width: 250px;
+  max-width: 300px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.step-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+}
+
+.step-number {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #16a34a;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.step-icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.step-card h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #1a1a1a;
+}
+
+.step-card p {
+  font-size: 14px;
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.step-arrow {
+  font-size: 30px;
+  color: #16a34a;
+  font-weight: 300;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .steps-grid {
+    flex-direction: column;
+  }
+  
+  .step-arrow {
+    transform: rotate(90deg);
+  }
+  
+  .step-card {
+    max-width: 100%;
+  }
+}

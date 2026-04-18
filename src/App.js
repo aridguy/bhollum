@@ -1,22 +1,28 @@
 // App.js
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
-// import './styles/globals.css';
+import { useState, useEffect } from 'react';
 import Home from './routes/Home';
 import Shop from './routes/Shop';
 import Contact from './routes/Contact';
 import Faq from './routes/Faq';
-// import Navbar from './components/Navbar';
 
 function App() {
-  return (
+  const [cart, setCart] = useState(() => {
+    const savedCart = localStorage.getItem('bhollumCart');
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
 
+  useEffect(() => {
+    localStorage.setItem('bhollumCart', JSON.stringify(cart));
+  }, [cart]);
+
+  return (
     <Router>
       <Routes>
-        <Route index element={<Home />} />
-        <Route path="shop" element={<Shop />} />
-        <Route path="contact" element={<Contact />} />
-        <Route path="faq" element={<Faq />} />
+        <Route index element={<Home cart={cart} setCart={setCart} />} />
+        <Route path="shop" element={<Shop cart={cart} setCart={setCart} />} />
+        <Route path="contact" element={<Contact cart={cart} setCart={setCart} />} />
+        <Route path="faq" element={<Faq cart={cart} setCart={setCart} />} />
       </Routes>
     </Router>
   );

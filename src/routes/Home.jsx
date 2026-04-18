@@ -5,10 +5,11 @@ import Navbar from "../components/Navbar";
 import { TypeAnimation } from "react-type-animation";
 import Footer from "../components/Footer";
 
-const Home = () => {
+const Home = ({ cart, setCart }) => {
   return (
     <div className="homepage">
-      <Navbar />
+      <Navbar cart={cart} setCart={setCart} />
+      
       {/* Hero Section */}
       <section className="hero">
         <div className="container">
@@ -19,7 +20,7 @@ const Home = () => {
                 Authentic Nigerian <br />
                 <span className="text-green">Foodstuffs</span> & More
               </h1>
-              <p className="hero-description">
+              <div className="hero-description-wrapper">
                 <TypeAnimation
                   sequence={[
                     "Fresh, high-quality flours",
@@ -35,16 +36,16 @@ const Home = () => {
                     "Fresh, high-quality flours, garri, palm oil, and pantry essentials delivered straight to your doorstep. Taste the tradition.",
                     3000,
                     "",
-                    200, // Faster deletion speed (200ms delay before restarting)
+                    200,
                   ]}
                   wrapper="p"
                   speed={40}
-                  deletionSpeed={80} // Faster deletion (80ms per character)
+                  deletionSpeed={80}
                   className="hero-description"
                   repeat={Infinity}
                   cursor={true}
                 />
-              </p>
+              </div>
               <div className="hero-buttons">
                 <Link to="/shop" className="btn btn-primary">
                   Shop Now →
@@ -83,6 +84,38 @@ const Home = () => {
                   <span className="food-emoji">🫘</span>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="how-it-works">
+        <div className="container">
+          <div className="section-header">
+            <h2>How It Works</h2>
+            <p>Get your favorite foodstuffs in 3 simple steps</p>
+          </div>
+          <div className="steps-grid">
+            <div className="step-card">
+              <div className="step-number">1</div>
+              <div className="step-icon">🛍️</div>
+              <h3>Browse & Select</h3>
+              <p>Explore our wide range of authentic Nigerian foodstuffs and add your favorites to cart</p>
+            </div>
+            <div className="step-arrow">→</div>
+            <div className="step-card">
+              <div className="step-number">2</div>
+              <div className="step-icon">💳</div>
+              <h3>Place Your Order</h3>
+              <p>Checkout easily via WhatsApp and confirm your delivery details with our team</p>
+            </div>
+            <div className="step-arrow">→</div>
+            <div className="step-card">
+              <div className="step-number">3</div>
+              <div className="step-icon">🚚</div>
+              <h3>Fast Delivery</h3>
+              <p>Receive your order at your doorstep within 24-48 hours, fresh and ready to use</p>
             </div>
           </div>
         </div>
@@ -239,6 +272,7 @@ const Home = () => {
           </div>
         </div>
       </section>
+      
       <Footer />
     </div>
   );
